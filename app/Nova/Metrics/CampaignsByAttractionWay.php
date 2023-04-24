@@ -2,6 +2,10 @@
 
 namespace App\Nova\Metrics;
 
+use App\Models\AttractionWay;
+use App\Models\AttractionWayCampaign;
+use App\Models\Campaign;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
 
@@ -15,7 +19,24 @@ class CampaignsByAttractionWay extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Model::class, 'groupByColumn');
+
+        $AttractionWayCampaigns = AttractionWayCampaign::select([
+            'cfc.descricao AS descricao',
+            DB::raw('count(cad_forma_capitacao_campanha.id_campanha) AS campanhas_count')
+        ])
+        ->join('cad_forma_capitacao AS cfc', 'cad_forma_capitacao_campanha.id_forma_capitacao', '=', 'cfc.id_forma_capitacao')
+        ->join('cad_campanha AS cc', 'cad_forma_capitacao_campanha.id_campanha', '=', 'cc.id_campanha')
+        ->groupBy('cfc.descricao')
+        ->orderByDesc('campanhas_count')
+        ->get();
+
+        return $this->result(
+            $AttractionWayCampaigns->flatMap(function ($AttractionWayCampaign) {
+                return [
+                    $AttractionWayCampaign->descricao => $AttractionWayCampaign->campanhas_count
+                ];
+            })->toArray()
+        );
     }
 
     /**
@@ -36,5 +57,10 @@ class CampaignsByAttractionWay extends Partition
     public function uriKey()
     {
         return 'campaigns-by-attraction-way';
+    }
+
+    public function name()
+    {
+        return 'Campanhas por forma de captação';
     }
 }
