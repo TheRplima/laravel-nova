@@ -3,6 +3,7 @@
 namespace App\Nova\Metrics;
 
 use App\Models\Proposal;
+use App\Models\FormaInclusao;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
 
@@ -16,7 +17,10 @@ class ProposalsByInclusionWay extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Proposal::class, 'id_forma_inclusao');
+        return $this->count($request, Proposal::class, 'id_forma_inclusao')
+            ->label(function ($value) {
+                return FormaInclusao::find($value)->descricao;
+            });
     }
 
     /**
