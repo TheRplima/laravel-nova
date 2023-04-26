@@ -2,10 +2,14 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\CampaignsByAttractionWay;
+use App\Nova\Metrics\CampaignsByContactWay;
+use App\Nova\Metrics\PreClientsByPeriod;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -51,7 +55,8 @@ class Campaign extends Resource
                     return [
                         Text::make('Hash'),
                     ];
-                })
+                }),
+            HasMany::make('Pré Clientes','pre_clientes', 'App\Nova\ClientsPreRegister')
         ];
     }
 
@@ -63,7 +68,11 @@ class Campaign extends Resource
      */
     public function cards(NovaRequest $request)
     {
-        return [];
+        return [
+            new CampaignsByAttractionWay(),
+            new CampaignsByContactWay(),
+            new PreClientsByPeriod()
+        ];
     }
 
     /**

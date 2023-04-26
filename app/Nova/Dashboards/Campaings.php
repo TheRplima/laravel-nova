@@ -4,6 +4,7 @@ namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\CampaignsByAttractionWay;
 use App\Nova\Metrics\CampaignsByContactWay;
+use App\Nova\Metrics\PreClientsByPeriod;
 use Laravel\Nova\Dashboard;
 
 class Campaings extends Dashboard
@@ -17,7 +18,8 @@ class Campaings extends Dashboard
     {
         return [
             new CampaignsByAttractionWay(),
-            new CampaignsByContactWay()
+            new CampaignsByContactWay(),
+            new PreClientsByPeriod()
         ];
     }
 
