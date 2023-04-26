@@ -14,12 +14,17 @@ class Campaign extends Model
     protected $primaryKey = 'id_campanha';
 
     public function forma_contato() {
-        return $this->belongsTo(ContactWayCampaign::class, 'id_forma_contato_campanha');
+        return $this->belongsTo(ContactWayCampaign::class, 'id_forma_contato_campanha', 'id_forma_contato_campanha');
     }
 
     public function formas_capitacao()
     {
-        return $this->belongsToMany(AttractionWay::class, 'cad_forma_capitacao_campanha', 'id_forma_capitacao', 'id_campanha')
-            ->withPivot(['hash']);
+        return $this->belongsToMany(AttractionWay::class, 'cad_forma_capitacao_campanha', 'id_campanha', 'id_forma_capitacao')
+            ->withPivot('hash');
+    }
+
+    public function pre_clientes()
+    {
+        return $this->belongsToMany(ClientsPreRegister::class, 'cad_forma_capitacao_campanha', 'id_campanha', 'hash', 'id_campanha', 'hash_origem_campanha');
     }
 }

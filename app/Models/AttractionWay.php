@@ -15,6 +15,7 @@ class AttractionWay extends Model
 
     public function campanhas()
     {
-        return $this->belongsToMany(Campaign::class, 'cad_forma_capitacao_campanha', 'id_campanha', 'id_forma_capitacao');
+        return $this->belongsToMany(Campaign::class, 'cad_forma_capitacao_campanha', 'id_forma_capitacao', 'id_campanha')
+            ->withPivot('hash');
     }
 }

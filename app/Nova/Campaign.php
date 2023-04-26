@@ -49,14 +49,19 @@ class Campaign extends Resource
         return [
             Text::make('Descricao', 'descricao'),
             BelongsTo::make('Forma de contato', 'forma_contato', 'App\Nova\ContactWayCampaign'),
-            Date::make('Data Criação','created_at'),
+            Date::make('Data Criação', 'created_at'),
             BelongsToMany::make('Forma de Captação', 'formas_capitacao', 'App\Nova\AttractionWay')
                 ->fields(function () {
                     return [
                         Text::make('Hash'),
                     ];
                 }),
-            HasMany::make('Pré Clientes','pre_clientes', 'App\Nova\ClientsPreRegister')
+            BelongsToMany::make('Pré Clientes', 'pre_clientes', 'App\Nova\ClientsPreRegister')
+                ->fields(function () {
+                    return [
+                        Text::make('Hash')
+                    ];
+                })
         ];
     }
 

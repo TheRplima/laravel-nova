@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -42,7 +43,8 @@ class ContactWayCampaign extends Resource
     {
         return [
             ID::make('ID', 'id_forma_contato_campanha')->sortable(),
-            Text::make('Descricao')
+            Text::make('Descricao'),
+            HasMany::make('Campanhas','campanhas', 'App\Nova\Campaign')
         ];
     }
 

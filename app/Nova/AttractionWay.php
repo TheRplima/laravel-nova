@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -42,7 +43,13 @@ class AttractionWay extends Resource
     {
         return [
             ID::make('ID', 'id_forma_capitacao')->sortable(),
-            Text::make('Descricao')
+            Text::make('Descricao'),
+            BelongsToMany::make('Campanhas', 'campanhas', 'App\Nova\Campaign')
+                ->fields(function () {
+                    return [
+                        Text::make('Hash'),
+                    ];
+                }),
         ];
     }
 

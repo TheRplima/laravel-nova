@@ -15,6 +15,6 @@ class ClientsPreRegister extends Model
 
     public function campanhas()
     {
-        return $this->belongsToMany(Campaign::class, 'cad_forma_capitacao_campanha', 'hash', 'hash');
+        return $this->belongsToMany(Campaign::class, 'cad_forma_capitacao_campanha', 'hash', 'id_campanha', 'hash_origem_campanha', 'id_campanha');
     }
 }
