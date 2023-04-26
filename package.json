@@ -2,15 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
-        "build-analytics": "cd nova-components/Analytics && npm run dev",
-        "build-analytics-prod": "cd nova-components/Analytics && npm run prod",
-        "build-NewClients": "cd nova-components/NewClients && npm run dev",
-        "build-NewClients-prod": "cd nova-components/NewClients && npm run prod",
-        "build-newclients": "cd nova-components/Newclients && npm run dev",
-        "build-newclients-prod": "cd nova-components/Newclients && npm run prod",
-        "build-new_clients": "cd nova-components/NewClients && npm run dev",
-        "build-new_clients-prod": "cd nova-components/NewClients && npm run prod"
+        "build": "vite build"
     },
     "devDependencies": {
         "axios": "^1.1.2",
